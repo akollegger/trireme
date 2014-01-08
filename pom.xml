@@ -12,7 +12,7 @@
   <name>trireme</name>
   <description>Trireme -- Embed Node.js programs inside the Java Virtual Machine</description>
   <url>http://apigee.io/</url>
-  <version>0.6.8-SNAPSHOT</version>
+  <version>0.6.9-SNAPSHOT</version>
   
   <packaging>pom</packaging>
 
@@ -23,6 +23,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <useCoverage>false</useCoverage>
   </properties>
 
   <licenses>
@@ -164,51 +165,31 @@
 
    <profiles>
     <profile>
-      <id>release-sign-artifacts</id>
+      <id>build-with-coverage</id>
       <activation>
         <property>
-          <name>performRelease</name>
+          <name>useCoverage</name>
           <value>true</value>
         </property>
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.6.4.201312101107</version>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
+                        <id>default-prepare-agent</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
                     <execution>
-                        <id>attach-sources</id>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -216,7 +197,60 @@
         </plugins>
       </build>
     </profile>
-  </profiles>
+    <profile>
+        <id>release-sign-artifacts</id>
+        <activation>
+            <property>
+                <name>performRelease</name>
+                <value>true</value>
+            </property>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+   </profiles>
 
   <scm>
     <url>git@github.com:apigee/trireme.git</url>
@@ -236,6 +270,10 @@
     <developer>
         <name>Ed Anuff</name>
         <id>edanuff</id>
+    </developer>
+    <developer>
+        <name>Christopher Hunt</name>
+        <id>huntc</id>
     </developer>
   </developers>
 </project>

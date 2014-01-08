@@ -338,13 +338,6 @@ public class BasicTest
     }
 
     @Test
-    public void testSealing()
-        throws InterruptedException, ExecutionException, NodeException
-    {
-        runTest("rootsealtest.js");
-    }
-
-    @Test
     public void testSpawnSuccess()
         throws InterruptedException, ExecutionException, NodeException
     {
@@ -494,6 +487,20 @@ public class BasicTest
         throws InterruptedException, ExecutionException, NodeException
     {
         runTest("pipepipetest.js");
+    }
+
+    @Test
+    public void testBigFile()
+        throws InterruptedException, ExecutionException, NodeException
+    {
+        runTest("bigfiletest.js");
+    }
+
+    @Test
+    public void testBasicCrypto()
+        throws InterruptedException, ExecutionException, NodeException
+    {
+        runTest("cryptotests.js");
     }
 
     private void runTest(String name)

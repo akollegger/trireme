@@ -1,7 +1,9 @@
 *~
 *.pyc
 target/
-idea_project/
+.idea
+./idea_project/
+*.iml
 .classpath
 .project
 .settings/
