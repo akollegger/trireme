@@ -193,13 +193,6 @@ public class NodeEnvironment
     }
 
     /**
-     * Internal: Get the global scope.
-     */
-    public ScriptableObject getScope() {
-        return rootScope;
-    }
-
-    /**
      * Internal: Get the registry of built-in modules.
      */
     public ModuleRegistry getRegistry() {

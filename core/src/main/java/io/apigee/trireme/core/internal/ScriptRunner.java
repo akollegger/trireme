@@ -601,9 +601,7 @@ public class ScriptRunner
         cx.putThreadLocal(RUNNER, this);
 
         // Re-use the global scope from before, but make it top-level so that there are no shared variables
-        scope = (ScriptableObject)cx.newObject(env.getScope());
-        scope.setPrototype(env.getScope());
-        scope.setParentScope(null);
+        scope = cx.initStandardObjects();
 
         try {
             // Set up "process"
